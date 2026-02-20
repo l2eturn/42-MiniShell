@@ -1,69 +1,105 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input_pharse.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/21 03:00:55 by slimvutt          #+#    #+#             */
+/*   Updated: 2026/02/21 03:00:55 by slimvutt         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "myshell.h"
+#include <stdlib.h>
+#include <stdio.h>
 
-// for empty space || tab	
-char** parse_input(char* input)
+static int	is_space(char c)
 {
-    size_t buffer_size = MAX_INPUT;
-    char** tokens = malloc(buffer_size * sizeof(char*));
-    char* token = NULL;
-    size_t position = 0;
-    size_t token_length = 0;
-
-    if(!tokens) 
-    {
-        perror("Malloc");
-        exit(EXIT_FAILURE);
-    }
-
-    // Loop through each character in the input string
-    for (size_t i = 0; input[i]; i++)    
-    {
-        // Skip leading whitesapce characters ' ' \n \t \r \a
-        while (input[i] == ' ' || input[i] == '\n' || input[i] == '\t' || input[i] == '\r' || input[i] == '\a')
-            i++;
-
-        if(input[i] == '\0') break;
-
-        token = &input[i];
-
-        while (input[i] != '\0' && input[i] != ' ' && input[i] != '\n' && input[i] != '\t' && input[i] != '\r' && input[i] != '\a')
-        {
-            token_length++;
-            i++;
-        }
-
-        tokens[position] = malloc((token_length + 1) * sizeof(char));
-
-        if(!tokens[position]) 
-        {
-            perror("Malloc");
-            exit(EXIT_FAILURE);
-        }
-
-        for (size_t j = 0; j < token_length; j++)
-        {
-            tokens[position][j] = token[j];
-        }
-        tokens[position][token_length] = '\0'; // Null terminate token
-        position++;
-        token_length = 0; // Reset for next token     
-    }
-    
-    tokens[position] = NULL; // Terminate the array with NULL
-    return tokens;
-
+	if (c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == '\a')
+		return (1);
+	return (0);
 }
 
-// Free allocated tokens
-void free_tokens(char** tokens)
+static size_t	get_token_len(char *str, size_t i)
 {
-    if (tokens)
-        return;
+	size_t	len;
+	char	q;
 
-    for (size_t i = 0; tokens[i]; i++)
-    {
-        free(tokens[i]); // Free each token
-    }
+	len = 0;
+	q = 0;
+	while (str[i + len])
+	{
+		if ((str[i + len] == '\'' || str[i + len] == '\"') && q == 0)
+			q = str[i + len];
+		else if (str[i + len] == q)
+			q = 0;
+		else if (q == 0 && is_space(str[i + len]))
+			break ;
+		len++;
+	}
+	return (len);
+}
 
-    free(tokens); // Free the tokens array
+static char	*extract_token(char *str, size_t *i)
+{
+	size_t	len;
+	size_t	j;
+	char	*token;
+
+	len = get_token_len(str, *i);
+	token = malloc(sizeof(char) * (len + 1));
+	if (!token)
+	{
+		perror("Malloc");
+		exit(EXIT_FAILURE);
+	}
+	j = 0;
+	while (j < len)
+	{
+		token[j] = str[*i + j];
+		j++;
+	}
+	token[len] = '\0';
+	*i += len;
+	return (token);
+}
+
+char	**parse_input(char *input)
+{
+	char	**tokens;
+	size_t	i;
+	size_t	pos;
+
+	tokens = malloc(MAX_INPUT * sizeof(char *));
+	if (!tokens)
+		exit(EXIT_FAILURE);
+	i = 0;
+	pos = 0;
+	while (input[i])
+	{
+		while (input[i] && is_space(input[i]))
+			i++;
+		if (!input[i])
+			break ;
+		tokens[pos] = extract_token(input, &i);
+		pos++;
+	}
+	tokens[pos] = NULL;
+	return (tokens);
+}
+
+void	free_tokens(char **tokens)
+{
+	size_t	i;
+
+	if (!tokens)
+		return ;
+	i = 0;
+	while (tokens[i])
+	{
+		free(tokens[i]);
+		i++;
+	}
+	free(tokens);
 }
