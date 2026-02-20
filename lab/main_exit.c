@@ -47,12 +47,16 @@ void	shell_loop(char **envp)
 
 	while (1)
 	{
-		printf("[nigga_shell 👨🏿]> ");
+		printf("[nigga_shell👨🏿]> ");
 		getline(&input, &input_size, stdin);
 		if (is_exit(input))
 			exit(EXIT_SUCCESS);
 		args = parse_input(input);
-		printf("%s\n", input);
+		//printf("%s\n", input);
+		for (int i = 0; args[i]; i ++){
+			printf("This is your %d argument: ",i);
+			printf("%s\n", args[i]);
+		}
 		free_tokens(args);
 	}
 }
