@@ -56,7 +56,7 @@ int	shell_builts(char **args, char **envp, char *initial_directory)
 	if (!ft_strcmp(args[0],"cd"))
 		command_cd(args, envp);
 	else if (!ft_strcmp(args[0],"pwd"))
-		printf("%s\n", initial_directory);
+		command_pwd();
 	return 0;
 }
 
