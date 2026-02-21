@@ -1,4 +1,6 @@
 #include "myshell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 //#include "libft.h"
 
 // Shell loop
@@ -14,26 +16,17 @@ int	ft_strlen(char *str)
 {
 	int len = 0;
 	while (str[len])
-		len ++;
-	return len;
+		len++;
+	return (len);
 }
 
-int is_exit(char *str)
+int is_exit(char **args)
 {
-    char *ext = "exit";
-    int i = 0;
-
-    if (!str)
-        return 0;
-    while (ext[i])
-    {
-        if (str[i] != ext[i])
-            return 0;
-        i++;
-    }
-    if (str[i] == '\0' || str[i] == '\n')
-        return 1;  
-    return 0;
+    if (!args || !args[0])
+        return (0);
+    if (ft_strcmp(args[0], "exit") == 0)
+        return (1);
+    return (0);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)
@@ -45,57 +38,69 @@ int	ft_strcmp(const char *s1, const char *s2)
 	{
 		if (s1[i] != s2[i])
 			return (s1[i] - s2[i]);
-		i ++;
+		i++;
 	}
 	return (0);
 }
 
-// cd, pwd, echo, setenv, unsetenv, which, exit
-int	shell_builts(char **args, char **envp, char *initial_directory)
+int	shell_builts(char **args, char **envp)
 {
-	if (!ft_strcmp(args[0],"cd"))
+	if (!ft_strcmp(args[0], "cd"))
 		command_cd(args, envp);
-	else if (!ft_strcmp(args[0],"pwd"))
+	else if (!ft_strcmp(args[0], "pwd"))
 		command_pwd();
-	return 0;
+	else if (!ft_strcmp(args[0], "echo"))
+		command_echo(args, envp);
+	else if (!ft_strcmp(args[0], "env"))
+		command_env(envp);
+	return (0);
 }
 
 void	shell_loop(char **envp)
 {
-	char 	*input;
-	size_t	input_size;
-	char 	**args;
-	char	*initial_directory = getcwd(NULL, 0);
+	char	*input;
+	char	**args;
 
-	input = NULL;
-	input_size = 0;
 	while (1)
 	{
-		printf("[nig_shell👨🏿]> ");
-		getline(&input, &input_size, stdin);
-		if (is_exit(input))
+		input = readline("[nig_shell👨🏿]> ");
+		if (!input)
 		{
-			free_tokens(args);
-			exit(EXIT_SUCCESS);
+			printf("exit\n");
+			break ;
 		}
-		//////printf("%s\n", input);
+		if (*input)
+			add_history(input);
+
 		args = parse_input(input);
-		for (int i = 0; args[i]; i ++){
-			printf("This is your %d argument: ",i);
-			printf("%s\n", args[i]);
-		}
-		if (args[0] != NULL)
+
+		if (args && args[0])
 		{
-			shell_builts(args, envp, initial_directory);
+			// --- Debug Token (ลบได้) ---
+			for (int i = 0; args[i]; i++)
+			{
+				printf("This is your %d argument: %s\n", i, args[i]);
+			}
+			// ------------------------------------------------
+			if (is_exit(args))
+			{
+				free_tokens(args);
+				free(input);
+				break ;
+			}
+			shell_builts(args, envp);
 		}
-	}	
+		free_tokens(args);
+		free(input);
+	}
 }
 
 int main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
+	
 	shell_loop(envp);
-	//printf("%s\n",envp[atoi(av[1])]);
-	printf("exit loop");
+	printf("exit loop\n");
+	return (0);
 }

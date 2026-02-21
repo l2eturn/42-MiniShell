@@ -17,7 +17,7 @@ $(LIBFT):
 	make -C $(LIBFT_DIR)
 
 $(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -o $(TARGET)
+	$(CC) $(CFLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -lreadline -o $(TARGET)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
