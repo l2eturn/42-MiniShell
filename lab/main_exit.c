@@ -67,13 +67,11 @@ char	*ft_getenv(char *name, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		// เช็คว่าชื่อตรงไหม และตัวถัดไปต้องเป็น '=' (เพื่อกันกรณีหา "USER" แต่ไปเจอ "USER_NAME=...")
 		if (ft_strncmp(envp[i], name, len) == 0 && envp[i][len] == '=')
 			return (&envp[i][len + 1]);
-		// รีเทิร์น Address ของตัวอักษรหลังเครื่องหมาย '='
 		i++;
 	}
-	return (NULL); // ถ้าหาไม่เจอ ให้คืนค่า NULL
+	return (NULL);
 }
 
 void	ultimate_freeing(char **args, char *input)
