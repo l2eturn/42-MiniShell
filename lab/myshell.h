@@ -15,12 +15,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-
+#include <readline/readline.h>
+#include <readline/history.h>
 
 char				**parse_input(char *input);
 void 				free_tokens(char** tokens);
 int					shell_builts(char **args, char **envp);
 int					ft_strcmp(const char *s1, const char *s2);
+void				ultimate_freeing(char **args, char *input);
 //Builts-in function
 int					command_cd(char **args, char **envp);
 int					command_pwd(void);
