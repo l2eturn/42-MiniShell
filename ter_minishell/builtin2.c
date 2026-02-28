@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2026/02/28 08:53:17 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/02/28 08:58:14 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ int	ft_env(t_shell *shell)
 	return (0);
 }
 
-/*
-** print_export: print env vars in "declare -x KEY="VALUE"" format
-*/
 static void	print_export(char **envp)
 {
 	int	i;

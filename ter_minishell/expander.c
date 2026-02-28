@@ -6,21 +6,17 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2026/02/28 08:52:57 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/02/28 08:59:07 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "myshell.h"
 
-/* IS_VARCHAR: valid characters in a variable name */
 # define IS_VARCHAR(c) (((c) >= 'a' && (c) <= 'z') \
 	|| ((c) >= 'A' && (c) <= 'Z') \
 	|| ((c) >= '0' && (c) <= '9') \
 	|| (c) == '_')
 
-/*
-** append_str: concatenate str to *result (frees old *result)
-*/
 static void	append_str(char **result, char *str)
 {
 	char	*tmp;
@@ -32,11 +28,6 @@ static void	append_str(char **result, char *str)
 	*result = tmp;
 }
 
-/*
-** expand_dollar: handle $VAR or $? expansion
-** advances *i past the variable reference
-** returns newly joined result string
-*/
 static char	*expand_dollar(char *result, char *word, int *i,
 	t_shell *shell)
 {
@@ -69,11 +60,6 @@ static char	*expand_dollar(char *result, char *word, int *i,
 	return (result);
 }
 
-/*
-** expand_word: process a raw token string
-** strips quotes, expands $ (respecting quote context)
-** returns a newly allocated expanded string
-*/
 char	*expand_word(char *word, t_shell *shell)
 {
 	char	*result;
@@ -118,9 +104,6 @@ char	*expand_word(char *word, t_shell *shell)
 	return (result);
 }
 
-/*
-** expand_tokens: expand all WORD tokens in the list in-place
-*/
 void	expand_tokens(t_token *tokens, t_shell *shell)
 {
 	t_token	*tok;

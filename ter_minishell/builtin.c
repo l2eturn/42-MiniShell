@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2026/02/28 08:53:33 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/02/28 08:58:08 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ int	is_builtin(char *name)
 		|| !ft_strcmp(name, "export") || !ft_strcmp(name, "unset")
 		|| !ft_strcmp(name, "exit"));
 }
-
-
-// is_n_flag: check if string is a valid -n flag (e.g. -n, -nn, -nnn)
 
 static int	is_n_flag(char *str)
 {
@@ -78,9 +75,6 @@ int	ft_pwd(void)
 	return (1);
 }
 
-/*
-** ft_cd: change directory, update PWD and OLDPWD env vars
-*/
 int	ft_cd(char **args, t_shell *shell)
 {
 	char	cwd[4096];

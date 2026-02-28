@@ -6,16 +6,12 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2026/02/28 08:52:31 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/02/28 08:59:48 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "myshell.h"
 
-/*
-** do_heredoc: read lines until delimiter, return read-end fd
-** write content to a pipe, return read end for stdin dup
-*/
 int	do_heredoc(char *delim)
 {
 	int		fd[2];
@@ -79,10 +75,6 @@ static int	apply_redir(t_redir *r)
 	return (0);
 }
 
-/*
-** setup_redirs: apply all redirections for a command
-** returns 0 on success, -1 on failure
-*/
 int	setup_redirs(t_redir *redirs)
 {
 	t_redir	*r;

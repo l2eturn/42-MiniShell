@@ -6,16 +6,12 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2026/02/28 08:52:38 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/02/28 08:59:40 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "myshell.h"
 
-/*
-** count_words: count WORD tokens in current command segment (until PIPE/NULL)
-** redir operators consume 2 tokens (operator + its target word)
-*/
 static int	count_words(t_token *tok)
 {
 	int	n;
@@ -36,10 +32,6 @@ static int	count_words(t_token *tok)
 	return (n);
 }
 
-/*
-** fill_args: allocate args array and fill it from tokens
-** returns pointer to next token after this command segment
-*/
 static t_token	*fill_args(t_token *tok, t_cmd *cmd, int word_count)
 {
 	int	i;
@@ -66,10 +58,6 @@ static t_token	*fill_args(t_token *tok, t_cmd *cmd, int word_count)
 	return (tok);
 }
 
-/*
-** parse_cmd: parse one command segment from token list
-** fills args and redirs, returns pointer past the PIPE token
-*/
 static t_token	*parse_cmd(t_token *tok, t_cmd **cmd_out)
 {
 	t_cmd		*cmd;
@@ -87,13 +75,7 @@ static t_token	*parse_cmd(t_token *tok, t_cmd **cmd_out)
 		*cmd_out = NULL;
 		return (NULL);
 	}
-	/*
-	** We need two passes: count_words then fill_args
-	** But fill_args needs both words and redirs in one pass
-	** So we use count_words just for malloc, then re-walk for filling
-	*/
 	tok = fill_args(save, cmd, wc);
-	/* skip PIPE token */
 	if (tok && tok->type == TK_PIPE)
 		tok = tok->next;
 	*cmd_out = cmd;

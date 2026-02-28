@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2026/02/28 08:53:13 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/02/28 08:58:26 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,6 @@ char	**env_dup(char **envp)
 	return (new);
 }
 
-/*
-** ft_getenv: find value of 'name' in envp array
-** returns pointer into existing string (do NOT free)
-*/
 char	*ft_getenv(const char *name, char **envp)
 {
 	int	i;
@@ -64,11 +60,6 @@ char	*ft_getenv(const char *name, char **envp)
 	return (NULL);
 }
 
-/*
-** env_set: add or update a KEY=VALUE pair in envp
-** frees old envp array (but NOT the old string pointers since they may be args)
-** returns new envp
-*/
 char	**env_set(char **envp, char *arg)
 {
 	char	**new;
@@ -106,9 +97,6 @@ char	**env_set(char **envp, char *arg)
 	return (new);
 }
 
-/*
-** env_unset: remove KEY from envp, return new envp
-*/
 char	**env_unset(char **envp, const char *key)
 {
 	char	**new;

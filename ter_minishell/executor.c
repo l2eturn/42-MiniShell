@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2026/02/28 08:53:03 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/02/28 08:58:40 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@ static void	exec_external(t_cmd *cmd, t_shell *shell)
 	exit(1);
 }
 
-/*
-** exec_child: set up pipes + redirections, then exec command
-** prev_fd: read end of previous pipe (-1 if first command)
-** pfd: current pipe fds (NULL if last command)
-*/
 void	exec_child(t_cmd *cmd, int prev_fd, int *pfd, t_shell *shell)
 {
 	setup_signals_child();
@@ -55,10 +50,6 @@ void	exec_child(t_cmd *cmd, int prev_fd, int *pfd, t_shell *shell)
 	exec_external(cmd, shell);
 }
 
-/*
-** exec_pipeline: fork and execute all commands in the pipeline
-** returns exit status of last command
-*/
 static int	exec_pipeline(t_cmd *cmds, t_shell *shell)
 {
 	int		prev_fd;

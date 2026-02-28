@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2026/02/28 08:52:54 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/02/28 08:57:56 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,6 @@ static void	tok_addback(t_token **lst, t_token *new)
 	cur->next = new;
 }
 
-/*
-** read_word: reads a word token from input[i]
-** handles single and double quotes as a unit
-** returns new index after the word
-*/
 static int	read_word(char *input, int i, t_token **lst)
 {
 	int		start;
@@ -66,10 +61,6 @@ static int	read_word(char *input, int i, t_token **lst)
 	return (i);
 }
 
-/*
-** read_op: reads |, <, >, >>, << tokens
-** returns new index after the operator
-*/
 static int	read_op(char *input, int i, t_token **lst)
 {
 	if (input[i] == '|')

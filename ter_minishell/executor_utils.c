@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2026/02/28 08:53:09 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/02/28 08:58:34 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@ void	free_strarr(char **arr)
 	free(arr);
 }
 
-/*
-** find_path: search for cmd in PATH directories
-** if cmd contains '/', treat as direct path
-** returns malloc'd full path or NULL if not found
-*/
 char	*find_path(char *cmd, char **envp)
 {
 	char	*path_env;
@@ -82,10 +77,6 @@ int	count_cmds(t_cmd *cmds)
 	return (n);
 }
 
-/*
-** is_single_builtin: true if only 1 cmd and it's a builtin
-** these run in parent process to affect shell state
-*/
 int	is_single_builtin(t_cmd *cmds)
 {
 	if (!cmds || cmds->next)

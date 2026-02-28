@@ -6,16 +6,12 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 00:00:00 by student           #+#    #+#             */
-/*   Updated: 2026/02/28 08:52:24 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/02/28 08:59:54 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "myshell.h"
 
-/*
-** handle_sigint: Ctrl-C in interactive mode
-** print newline + new prompt without exiting
-*/
 static void	handle_sigint(int sig)
 {
 	g_signal = sig;
@@ -25,11 +21,6 @@ static void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-/*
-** setup_signals: configure signals for interactive (parent) mode
-** SIGINT  -> show new prompt
-** SIGQUIT -> ignore (Ctrl-\)
-*/
 void	setup_signals(void)
 {
 	struct sigaction	sa_int;
@@ -46,10 +37,6 @@ void	setup_signals(void)
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
-/*
-** setup_signals_child: restore default signal behaviour in child processes
-** so that Ctrl-C actually kills the child
-*/
 void	setup_signals_child(void)
 {
 	signal(SIGINT, SIG_DFL);
