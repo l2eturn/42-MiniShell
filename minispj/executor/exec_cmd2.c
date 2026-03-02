@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 15:50:26 by cduangpl          #+#    #+#             */
-/*   Updated: 2026/02/27 16:01:23 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/03 02:35:20 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 #include "minishell.h"
 
@@ -24,12 +26,12 @@ void	exec(int index, int pipes[MAX_PIPE][2],
 	close_all(pipes, process_num, cmd_lines);
 	if (cur->is_error)
 		exit(1);
+	ft_memmove_argv(cur->argv);
+	if (cur->cmd && cur->cmd[0] == '\x01')
+		ft_memmove(cur->cmd, cur->cmd + 1, ft_strlen(cur->cmd));
 	if (is_builtin(cur->cmd))
 		exit(execute_builtin(cur));
 	path = find_cmd(cur->cmd, *cur->env_ptr);
-	if (!path)
-		exec_cmd_not_found(cur);
-	ft_memmove_argv(cur->argv);
 	execve(path, cur->argv, *cur->env_ptr);
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putendl_fd(cur->cmd, STDERR_FILENO);

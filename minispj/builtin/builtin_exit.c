@@ -3,21 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 14:28:51 by cduangpl          #+#    #+#             */
-/*   Updated: 2026/02/27 14:28:54 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/03 02:54:58 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	builtin_exit_help(t_cmd_group *cmd)
+{
+	if (cmd->prev == NULL && cmd->next == NULL)
+		ft_putendl_fd("exit", STDOUT_FILENO);
+}
 
 int	builtin_exit(t_cmd_group *cmd)
 {
 	long	exit_code_long;
 	int		exit_code;
 
-	ft_putendl_fd("exit", STDOUT_FILENO);
+	builtin_exit_help(cmd);
 	if (cmd->argv[1] == NULL || ft_strncmp(cmd->argv[1], "--", 3) == 0)
 		exit_errno(get_exit_stats(-1));
 	if (!is_valid_numeric(cmd->argv[1]))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 14:47:28 by cduangpl          #+#    #+#             */
-/*   Updated: 2026/02/27 16:10:34 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/03 02:49:30 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ bool	is_valid_numeric(char *str)
 		digit_count++;
 		i++;
 	}
-	if (digit_count > 19)
-		return (false);
 	return (true);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 14:29:17 by cduangpl          #+#    #+#             */
-/*   Updated: 2026/02/27 14:29:23 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/03 02:37:08 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,5 @@ void	print_env(char **env, int fd)
 		print_formatted_env(sorted[i], fd);
 		i++;
 	}
+	free_tab(sorted);
 }

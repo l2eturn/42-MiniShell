@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/02 15:14:09 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/03 03:02:49 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,8 @@ void		dup_process(int index, int pipes[MAX_PIPE][2],
 				t_cmd_group *cur, int process_num);
 int			wait_pid_process(int pid[MAX_PROCESS], int process_num,
 				t_cmd_group *cmd_lines);
+int			inner_wait_process(int pid[MAX_PROCESS], int process_num,
+				t_cmd_group *cmd_lines, int closed_process);
 void		exec(int index, int pipes[MAX_PIPE][2],
 				t_cmd_group *cmd_lines, int process_num);
 int			loop_open(t_cmd_group *cmd_lines);
@@ -231,4 +233,5 @@ void		free_tokens_only(char **tokens);
 void		free_segments(char **segments);
 void		exit_status_help_process_line(int *exit_status);
 void		init_cmd_node_help(t_cmd_group *node, char ***env_ptr);
+void		set_shlvl(char ***env_ptr);
 #endif

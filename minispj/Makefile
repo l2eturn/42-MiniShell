@@ -12,6 +12,7 @@ INCLUDES  = -I. -I$(LIBFT_DIR)
 SRC =   main.c \
 		utils.c \
         utils2.c \
+        utils3.c \
         main_exit.c \
         tokenizer.c \
         tokenizer_utils.c \
@@ -37,6 +38,7 @@ SRC =   main.c \
         executor/exec_cmd.c \
         executor/exec_cmd2.c \
         executor/exec_cmd3.c \
+        executor/exec_cmd4.c \
         executor/exec_cmd_utils.c \
         executor/exec_heredoc.c \
         executor/exec_heredoc2.c \
