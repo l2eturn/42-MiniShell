@@ -1,4 +1,3 @@
-
 TARGET  = minishell
 TEST    = test_builtin
 CC      = cc
@@ -78,6 +77,7 @@ clean:
 fclean: clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
 	rm -f $(TARGET) $(TEST)
+	rm -f a.out $(LIBFT_DIR)/libft.h.gch
 
 re: fclean all
 
