@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/02 14:46:40 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:05:16 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,10 @@ static void	process_line(char *line, char ***env_ptr, int *exit_status)
 	{
 		ft_putstr_fd("minishell: syntax error: unclosed quote\n",
 			STDERR_FILENO);
-		*exit_status = 2;
-		get_exit_stats(*exit_status);
+		exit_status_help_process_line(exit_status);
 	}
 	else if (!is_valid_tokens(line))
-	{
-		*exit_status = 2;
-		get_exit_stats(*exit_status);
-	}
+		exit_status_help_process_line(exit_status);
 	else
 	{
 		cmds = init_cmd_group(line, env_ptr, exit_status);

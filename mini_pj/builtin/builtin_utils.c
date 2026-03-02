@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 14:46:22 by cduangpl          #+#    #+#             */
-/*   Updated: 2026/03/02 14:38:25 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:06:01 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ int	set_env_var(char ***env, char *arg)
 
 void	inner_unset(char *cur, char ***env_ptr)
 {
-	int	i;
-	int	env_len;
-	int	arg_len;
+	int		i;
+	int		env_len;
+	int		arg_len;
 	char	*to_free;
 
 	i = -1;

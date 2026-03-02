@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/02 14:47:09 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:20:39 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ static char	**tab_skip_empty(char **tab)
 */
 
 //node->cmd_tokens = tab_skip_empty(node->cmd_tokens);
+
 static void	init_cmd_node(t_cmd_group *node, char *segment,
 	char ***env_ptr, int *exit_status)
 {
 	char	**temp;
+
 	node->cmds_str = ft_strdup(segment);
 	node->cmd_tokens = tokenizer(segment);
 	expand_tokens(node->cmd_tokens, env_ptr, exit_status);
@@ -68,13 +70,7 @@ static void	init_cmd_node(t_cmd_group *node, char *segment,
 		node->cmd = ft_strdup(node->argv[0]);
 	else
 		node->cmd = NULL;
-	node->env_ptr = env_ptr;
-	node->is_heredoc = false;
-	node->lim = NULL;
-	node->in_files = NULL;
-	node->out_files = NULL;
-	node->is_error = false;
-	node->exit_status = 0;
+	init_cmd_node_help(node, env_ptr);
 	set_in_files(node);
 	set_out_files(node);
 }

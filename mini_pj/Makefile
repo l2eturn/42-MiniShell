@@ -51,7 +51,9 @@ SRC =   main.c \
         parser/parser_get_info.c \
         parser/parser_infiles.c \
         parser/parser_outfiles.c \
-        cleanup.c
+        cleanup.c \
+        cleanup_2.c \
+        parser/parser_cmd_help.c
 
 OBJ      = $(SRC:.c=.o)
 TEST_OBJ = $(TEST_SRC:.c=.o)

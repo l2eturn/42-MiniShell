@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 14:28:01 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:05:20 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,10 @@ void	exit_cmd(char *cmd, char *err_msg, int exit_status)
 void	exit_errno(int exit_status)
 {
 	exit(exit_status);
+}
+
+void	exit_status_help_process_line(int *exit_status)
+{
+	*exit_status = 2;
+	get_exit_stats(*exit_status);
 }
