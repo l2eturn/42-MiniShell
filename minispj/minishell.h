@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/03 03:02:49 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/03 19:01:30 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # include "libft/libft.h"
+# include <time.h>
+# include <sys/resource.h>
 
 # ifndef HOSTNAME
 #  define HOSTNAME "host"
@@ -234,4 +236,5 @@ void		free_segments(char **segments);
 void		exit_status_help_process_line(int *exit_status);
 void		init_cmd_node_help(t_cmd_group *node, char ***env_ptr);
 void		set_shlvl(char ***env_ptr);
+int			handle_time_keyword(char *line, char ***env_ptr, int *exit_status);
 #endif

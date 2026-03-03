@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/03 02:54:30 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/03 19:02:23 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static int	handle_line(char *line, char ***env_ptr, int exit_status)
 	if (*line)
 	{
 		add_history(line);
-		process_line(line, env_ptr, &exit_status);
+		if (handle_time_keyword(line, env_ptr, &exit_status) == -1)
+			process_line(line, env_ptr, &exit_status);
 	}
 	free(line);
 	return (exit_status);
