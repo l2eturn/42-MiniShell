@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	normalize_tv(long *sec, long *usec)
+void	normalize_tv(long *sec, long *usec)
 {
 	if (*usec < 0)
 	{
@@ -21,7 +21,7 @@ static void	normalize_tv(long *sec, long *usec)
 	}
 }
 
-static void	print_time_val(long sec, long usec, char *label)
+void	print_time_val(long sec, long usec, char *label)
 {
 	long	min;
 	long	rem;
@@ -44,27 +44,18 @@ static void	print_time_val(long sec, long usec, char *label)
 }
 
 static void	print_time_result(struct timespec s, struct timespec e,
-	struct rusage *rb, struct rusage *ra)
+		struct rusage *rb, struct rusage *ra)
 {
-	long	ws;
-	long	wu;
-	long	us;
-	long	uu;
-	long	ss;
-	long	su;
+	struct timeval	real_s;
+	struct timeval	real_e;
 
-	ws = e.tv_sec - s.tv_sec;
-	wu = (e.tv_nsec - s.tv_nsec) / 1000;
-	us = ra->ru_utime.tv_sec - rb->ru_utime.tv_sec;
-	uu = ra->ru_utime.tv_usec - rb->ru_utime.tv_usec;
-	ss = ra->ru_stime.tv_sec - rb->ru_stime.tv_sec;
-	su = ra->ru_stime.tv_usec - rb->ru_stime.tv_usec;
-	normalize_tv(&ws, &wu);
-	normalize_tv(&us, &uu);
-	normalize_tv(&ss, &su);
-	print_time_val(ws, wu, "real\t");
-	print_time_val(us, uu, "user\t");
-	print_time_val(ss, su, "sys\t");
+	real_s.tv_sec = s.tv_sec;
+	real_s.tv_usec = s.tv_nsec / 1000;
+	real_e.tv_sec = e.tv_sec;
+	real_e.tv_usec = e.tv_nsec / 1000;
+	print_diff(real_s, real_e, "real\t");
+	print_diff(rb->ru_utime, ra->ru_utime, "user\t");
+	print_diff(rb->ru_stime, ra->ru_stime, "sys\t");
 }
 
 static int	timed_exec(char *line, char ***env_ptr, int *exit_status)

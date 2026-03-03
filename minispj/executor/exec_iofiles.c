@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_iofiles.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 14:37:24 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/03 21:04:26 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* ── input redirect opener ───────────────────────────────────────────────── */
 
 static int	inner_loop_in(t_cmd_group *cur, t_infiles *cur_in)
 {
@@ -56,8 +54,6 @@ int	loop_in(t_cmd_group *cur)
 	return (cur->is_error);
 }
 
-/* ── output redirect opener ──────────────────────────────────────────────── */
-
 int	loop_out(t_cmd_group *cur)
 {
 	t_outfiles	*cur_out;
@@ -85,12 +81,26 @@ int	loop_out(t_cmd_group *cur)
 	return (0);
 }
 
-/* ── open all redirects in pipeline ─────────────────────────────────────── */
+bool	first_redirect_is_out(t_cmd_group *cur)
+{
+	int	i;
 
-/*
-** loop_open — open all in/out redirects for every node in the pipeline.
-** Returns the exit status of the last node.
-*/
+	if (!cur->cmd_tokens)
+		return (false);
+	i = 0;
+	while (cur->cmd_tokens[i])
+	{
+		if (is_simple_redirect(cur->cmd_tokens[i], '<')
+			|| is_heredoc_token(cur->cmd_tokens[i]))
+			return (false);
+		if (is_simple_redirect(cur->cmd_tokens[i], '>')
+			|| is_append_token(cur->cmd_tokens[i]))
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 int	loop_open(t_cmd_group *cmd_lines)
 {
 	t_cmd_group	*cur;
@@ -98,11 +108,9 @@ int	loop_open(t_cmd_group *cmd_lines)
 	cur = cmd_lines;
 	while (cur && g_status != SIGINT)
 	{
-		cur->exit_status = loop_in(cur);
+		handle_redirection(cur);
 		if (g_status == SIGINT)
 			return (cur->exit_status);
-		if (cur->exit_status == 0)
-			cur->exit_status = loop_out(cur);
 		cur = cur->next;
 	}
 	cur = cmd_lines;

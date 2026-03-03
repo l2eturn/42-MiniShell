@@ -31,6 +31,7 @@ SRC =   main.c \
         builtin/builtin_utils.c \
         builtin/builtin_utils2.c \
         builtin/builtin_time.c \
+        builtin/builtin_time_utils.c \
         expander/expander.c \
         expander/expander_token.c \
         expander/expander_var.c \

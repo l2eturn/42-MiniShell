@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_infiles.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 14:38:11 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/03 19:29:29 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* ── list helpers ────────────────────────────────────────────────────────── */
 
 static t_infiles	*find_last_infile(t_infiles *head)
 {
@@ -42,31 +40,23 @@ static void	add_infile_to_list(t_cmd_group *node, char *filename,
 	}
 }
 
-/* ── redirect processing ─────────────────────────────────────────────────── */
-
 static int	process_input_redirect(t_cmd_group *node, char **tokens, int i)
 {
 	if (tokens[i + 1] == NULL)
 		return (i + 1);
 	if (is_heredoc_token(tokens[i]))
 	{
-		add_infile_to_list(node, NULL, true, tokens[i + 1]);
+		add_infile_to_list(node, NULL, true, clean_token(tokens[i + 1]));
 		return (i + 2);
 	}
 	else if (is_simple_redirect(tokens[i], '<'))
 	{
-		add_infile_to_list(node, tokens[i + 1], false, NULL);
+		add_infile_to_list(node, clean_token(tokens[i + 1]), false, NULL);
 		return (i + 2);
 	}
 	return (i + 1);
 }
 
-/* ── public API ──────────────────────────────────────────────────────────── */
-
-/*
-** set_in_files — walk cmd_tokens and build the t_infiles linked list.
-** Handles both < file and << DELIMITER.
-*/
 void	set_in_files(t_cmd_group *node)
 {
 	int	i;

@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 15:49:56 by cduangpl         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 13:33:07 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/03 20:00:59 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +64,25 @@ void	close_all(int pipes[MAX_PIPE][2], int process_num,
 void	dup_process(int index, int pipes[MAX_PIPE][2],
 	t_cmd_group *cur, int process_num)
 {
-	if (index == 0 && cur->in_fd != STDIN_FILENO)
+	if (cur->in_fd != STDIN_FILENO)
 		dup2(cur->in_fd, STDIN_FILENO);
 	else if (index > 0)
 		dup2(pipes[index - 1][0], STDIN_FILENO);
-	if (index == process_num - 1 && cur->out_fd != STDOUT_FILENO)
+	if (cur->out_fd != STDOUT_FILENO)
 		dup2(cur->out_fd, STDOUT_FILENO);
 	else if (index < process_num - 1)
 		dup2(pipes[index][1], STDOUT_FILENO);
 }
+
+//void	dup_process(int index, int pipes[MAX_PIPE][2],
+//	t_cmd_group *cur, int process_num)
+//{
+//	if (index == 0 && cur->in_fd != STDIN_FILENO)
+//		dup2(cur->in_fd, STDIN_FILENO);
+//	else if (index > 0)
+//		dup2(pipes[index - 1][0], STDIN_FILENO);
+//	if (cur->out_fd != STDOUT_FILENO)	
+//		dup2(cur->out_fd, STDOUT_FILENO);
+//	else if (index < process_num - 1)
+//		dup2(pipes[index][1], STDOUT_FILENO);
+//}

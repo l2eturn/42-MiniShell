@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/03 19:01:30 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/03 21:10:11 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,4 +237,9 @@ void		exit_status_help_process_line(int *exit_status);
 void		init_cmd_node_help(t_cmd_group *node, char ***env_ptr);
 void		set_shlvl(char ***env_ptr);
 int			handle_time_keyword(char *line, char ***env_ptr, int *exit_status);
+int			handle_redirection(t_cmd_group *cur);
+bool		first_redirect_is_out(t_cmd_group *cur);
+void		print_diff(struct timeval s, struct timeval e, char *label);
+void		print_time_val(long sec, long usec, char *label);
+void		normalize_tv(long *sec, long *usec);
 #endif

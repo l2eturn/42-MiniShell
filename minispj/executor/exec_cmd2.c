@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 15:50:26 by cduangpl          #+#    #+#             */
-/*   Updated: 2026/03/03 04:38:20 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/03 20:01:36 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ int	execute_command(t_cmd_group *cmd_lines)
 		return (0);
 	process_num = cmd_len(cmd_lines);
 	if (loop_open(cmd_lines) != 0 && !cmd_lines->is_heredoc)
-		return (cmd_lines->exit_status);
+	{
+		if (process_num == 1 || g_status == SIGINT)
+			return (cmd_lines->exit_status);
+	}
 	if (process_num == 1 && cmd_lines->cmd
 		&& is_builtin(cmd_lines->cmd) && !cmd_lines->is_error)
 		return (run_single_builtin(cmd_lines));

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_outfiles.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 14:38:04 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/03 19:30:25 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* ── list helpers ────────────────────────────────────────────────────────── */
 
 static t_outfiles	*find_last_outfile(t_outfiles *head)
 {
@@ -50,12 +48,12 @@ static int	process_output_redirect(t_cmd_group *node, char **tokens, int i)
 		return (i + 1);
 	if (is_append_token(tokens[i]))
 	{
-		add_outfile_to_list(node, tokens[i + 1], true);
+		add_outfile_to_list(node, clean_token(tokens[i + 1]), true);
 		return (i + 2);
 	}
 	else if (is_simple_redirect(tokens[i], '>'))
 	{
-		add_outfile_to_list(node, tokens[i + 1], false);
+		add_outfile_to_list(node, clean_token(tokens[i + 1]), false);
 		return (i + 2);
 	}
 	return (i + 1);
