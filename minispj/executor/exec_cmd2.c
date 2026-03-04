@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 15:50:26 by cduangpl          #+#    #+#             */
-/*   Updated: 2026/03/03 20:01:36 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/04 13:26:26 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	exec(int index, int pipes[MAX_PIPE][2],
 	cur = get_cmd_at(cmd_lines, index);
 	dup_process(index, pipes, cur, process_num);
 	close_all(pipes, process_num, cmd_lines);
+	cur->in_fd = STDIN_FILENO;
+	cur->out_fd = STDOUT_FILENO;
 	if (cur->is_error)
 		exit(1);
 	if (!cur->cmd)
