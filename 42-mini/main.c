@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/03 19:02:23 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/07 17:09:30 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,28 +122,3 @@ int	main(int argc, char **argv, char **envp)
 	cleanup_shell(NULL, env);
 	return (exit_code);
 }
-
-// sleep 100000000 | sleep 2000000000 | sleep 300000000 "zombie process"
-// "cat" | ls
-// time sleep 5 | sleep 3
-// env -i
-// memory leak void	print_env(char **env, int fd)
-// signal (send to all children, and handle all leaks! pleae free before exit() triggered by signals)
-// sleep 1000000000000000000000 | exit 50 (should not print exit)
-
-// minishell> mkdir test
-// minishell> cd test/
-// minishell> rm -rf ../test/
-// minishell> pwd
-// pwd: No such file or directory
-// minishell> ls
-// minishell> ls ..
-// 1	 cleanup_2.c  debug.c	libft	     main.o	  out.txt	  README.md    tokenizer_utils.c  utils3.c  utils_tab.c
-// 2	 cleanup_2.o  debug.o	main.c	     Makefile	  parser	  signal       tokenizer_utils.o  utils3.o  utils_tab.o
-// 3	 cleanup.c    executor	main_exit.c  minishell	  quotes_check.c  tokenizer.c  utils2.c		  utils.c
-// builtin  cleanup.o    expander	main_exit.o  minishell.h  quotes_check.o  tokenizer.o  utils2.o		  utils.o
-// minishell> pwd
-// pwd: No such file or directory
-// minishell> mkdir test
-// mkdir: cannot create directory ‘test’: No such file or directory
-// minishell> 

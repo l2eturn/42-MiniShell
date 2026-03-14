@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 14:47:28 by cduangpl          #+#    #+#             */
-/*   Updated: 2026/03/03 02:49:30 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/07 17:22:20 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ bool	is_valid_echo_flag(char *arg)
 bool	is_valid_numeric(char *str)
 {
 	int	i;
-	int	digit_count;
 
 	if (str == NULL || *str == '\0')
 		return (false);
@@ -40,12 +39,10 @@ bool	is_valid_numeric(char *str)
 		i++;
 	if (str[i] == '\0')
 		return (false);
-	digit_count = 0;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
 			return (false);
-		digit_count++;
 		i++;
 	}
 	return (true);
