@@ -1,5 +1,5 @@
 # minishell
-
+# This project has been created as part of the 42 curriculum by <slimvutt>, <cduangpl>
 ## Table of Contents
 - [About](#about)
 - [Installation](#installation)
