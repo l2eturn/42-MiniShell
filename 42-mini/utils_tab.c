@@ -3,22 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils_tab.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 14:27:19 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/14 20:02:50 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* ── append_tab ──────────────────────────────────────────────────────────── */
-
-/*
-** append_tab — append one string to a NULL-terminated char** array.
-** If tab is NULL, creates a new array with just str.
-** Returns the new (reallocated) array.
-*/
 char	**append_tab(char **tab, char *str)
 {
 	char	**new_tab;
@@ -71,15 +64,6 @@ static char	*join_segment(char **tokens, int start, int end)
 	return (result);
 }
 
-/*
-** split_tokens — split a token array on "|" into an array of segment strings.
-**
-** Input:  ["echo", "hello", "|", "cat", "-e", NULL]
-** Output: ["echo hello", "cat -e", NULL]
-**
-** The returned strings can then each be re-tokenized by the parser
-** to build individual t_cmd_group nodes.
-*/
 char	**split_tokens(char **tokens)
 {
 	char	**segments;

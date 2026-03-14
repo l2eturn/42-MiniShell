@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_iofiles_check.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 14:37:36 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/14 20:05:29 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* ── access checks ───────────────────────────────────────────────────────── */
 
 int	check_in_access(char *filename, t_cmd_group *cur)
 {
@@ -46,8 +44,6 @@ int	check_out_access(char *filename, t_cmd_group *cur)
 	return (0);
 }
 
-/* ── error printing ──────────────────────────────────────────────────────── */
-
 void	fd_error_once(char *filename, t_cmd_group *cur, char *msg)
 {
 	if (!cur->is_error)
@@ -57,8 +53,6 @@ void	fd_error_once(char *filename, t_cmd_group *cur, char *msg)
 		ft_putendl_fd(msg, STDERR_FILENO);
 	}
 }
-
-/* ── fd cleanup ──────────────────────────────────────────────────────────── */
 
 void	close_old(t_cmd_group *cur)
 {

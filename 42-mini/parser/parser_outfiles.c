@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_outfiles.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/03 19:30:25 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/14 20:03:30 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,6 @@ static int	process_output_redirect(t_cmd_group *node, char **tokens, int i)
 	return (i + 1);
 }
 
-/* ── public API ──────────────────────────────────────────────────────────── */
-
-/*
-** set_out_files — walk cmd_tokens and build the t_outfiles linked list.
-** Handles both > file (truncate) and >> file (append).
-*/
 void	set_out_files(t_cmd_group *node)
 {
 	int	i;

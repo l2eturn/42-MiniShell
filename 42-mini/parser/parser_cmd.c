@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/02 15:20:39 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/14 20:00:53 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* ── empty token skip ────────────────────────────────────────────────────── */
-
-/*
-** tab_skip_empty — skip leading empty strings in a token array.
-** Returns pointer into the same array (or a copy if offset > 0).
-*/
 static char	**tab_skip_empty(char **tab)
 {
 	int	i;
@@ -31,22 +25,6 @@ static char	**tab_skip_empty(char **tab)
 		tab = copy_tab(&tab[i]);
 	return (tab);
 }
-
-/* ── node initialisation ─────────────────────────────────────────────────── */
-
-/*
-** init_cmd_node — fill one t_cmd_group node from a pipe segment string.
-**
-** Steps:
-**   1. tokenize the segment
-**   2. expand $VAR / $?
-**   3. strip quotes
-**   4. skip leading empty tokens
-**   5. extract in/out filenames, argv, cmd
-**   6. build t_infiles and t_outfiles linked lists
-*/
-
-//node->cmd_tokens = tab_skip_empty(node->cmd_tokens);
 
 static void	init_cmd_node(t_cmd_group *node, char *segment,
 	char ***env_ptr, int *exit_status)
@@ -75,12 +53,6 @@ static void	init_cmd_node(t_cmd_group *node, char *segment,
 	set_out_files(node);
 }
 
-/* ── node linking ────────────────────────────────────────────────────────── */
-
-/*
-** link_cmd_node — set next/prev pointers and operator for node at index.
-** If there is a next node, operator = PIPE.
-*/
 static void	link_cmd_node(t_cmd_group *cmds, int index, int size)
 {
 	cmds[index].operator = NONE;
