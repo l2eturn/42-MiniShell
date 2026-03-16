@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/14 20:00:53 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/16 12:34:38 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,6 @@ static void	link_cmd_node(t_cmd_group *cmds, int index, int size)
 		cmds[index].prev = &cmds[index - 1];
 }
 
-/* ── pipeline builder ────────────────────────────────────────────────────── */
-
-/*
-** build_cmd_groups — allocate and initialise the full t_cmd_group array.
-** segments = array of pipe-split strings, size = number of commands.
-*/
 static t_cmd_group	*build_cmd_groups(char **segments, int size,
 	char ***env_ptr, int *exit_status)
 {
@@ -96,17 +90,6 @@ static t_cmd_group	*build_cmd_groups(char **segments, int size,
 	return (cmd_group);
 }
 
-/* ── public API ──────────────────────────────────────────────────────────── */
-
-/*
-** init_cmd_group — parse a readline line into a t_cmd_group linked list.
-**
-** Flow:
-**   line → tokenizer → split_tokens (split on |) → build_cmd_groups
-**
-** Returns NULL on empty input or malloc failure.
-** Caller owns the result and must free it.
-*/
 t_cmd_group	*init_cmd_group(char *line, char ***env_ptr, int *exit_status)
 {
 	char		**tab;
