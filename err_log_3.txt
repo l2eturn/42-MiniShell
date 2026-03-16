@@ -1,0 +1,180 @@
+# This error
+
+slimvutt:42-mini$ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell 
+==214388== Memcheck, a memory error detector
+==214388== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==214388== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==214388== Command: ./minishell
+==214388== 
+minishell> echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"
+> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<
+minishell> 
+exit
+==214388== 
+==214388== HEAP SUMMARY:
+==214388==     in use at exit: 232,820 bytes in 235 blocks
+==214388==   total heap usage: 592 allocs, 357 frees, 259,596 bytes allocated
+==214388== 
+==214388== 1 bytes in 1 blocks are definitely lost in loss record 1 of 75
+==214388==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==214388==    by 0x1109BE: ft_strdup (in /home/slimvutt/42/project/minishell/minishell/42-mini/minishell)
+==214388==    by 0x10D0FD: handle_dollar_sign (expander_token.c:47)
+==214388==    by 0x10D23B: process_char (expander_token.c:77)
+==214388==    by 0x10D32B: expand_token (expander_token.c:117)
+==214388==    by 0x10CFA8: expand_tokens (expander.c:125)
+==214388==    by 0x10F1D6: init_cmd_node (parser_cmd.c:36)
+==214388==    by 0x10F4B2: build_cmd_groups (parser_cmd.c:86)
+==214388==    by 0x10F57E: init_cmd_group (parser_cmd.c:111)
+==214388==    by 0x109550: process_line (main.c:29)
+==214388==    by 0x10961D: handle_line (main.c:52)
+==214388==    by 0x1096A1: run_shell (main.c:73)
+
+slimvutt:42-mini$ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell 
+==214614== Memcheck, a memory error detector
+==214614== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==214614== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==214614== Command: ./minishell
+==214614== 
+minishell> cat minishell.h | grep ");"$ 
+void		exit_msg(char *msg);
+void		exit_cmd(char *cmd, char *err_msg, int exit_status);
+void		exit_errno(int exit_status);
+void		close_builtin_fds(t_cmd_group *cmd);
+int			is_builtin(char *cmd);
+int			execute_builtin(t_cmd_group *cmd);
+int			execute_builtin_main(t_cmd_group *cmd);
+int			builtin_cd(t_cmd_group *cmd);
+int			update_pwd(char ***env_ptr);
+int			update_oldpwd(char ***env_ptr, const char *saved_pwd);
+int			builtin_echo(t_cmd_group *cmd);
+int			builtin_env(t_cmd_group *cmd);
+int			builtin_exit(t_cmd_group *cmd);
+int			builtin_export(t_cmd_group *cmd, char ***env_ptr);
+int			builtin_pwd(t_cmd_group *cmd);
+int			builtin_unset(t_cmd_group *cmd, char ***env_ptr);
+bool		is_valid_identifier(char *arg);
+int			find_env_index(char **env, char *arg);
+int			append_env(char ***env, char *arg);
+int			set_env_var(char ***env, char *arg);
+void		inner_unset(char *cur, char ***env_ptr);
+bool		is_valid_echo_flag(char *arg);
+bool		is_valid_numeric(char *str);
+int			get_exit_stats(int exit_status);
+char		*get_env_value(char **env, const char *key);
+void		sort_env(char **env);
+void		print_formatted_env(char *entry, int fd);
+void		print_env(char **env, int fd);
+void		close_fd(int fd);
+int			tab_len(char **tab);
+char		*ft_getenv(char **env, const char *key);
+char		**copy_tab(char **tab);
+void		*ft_safe_calloc(size_t count, size_t size, char *msg);
+int			ft_strcmp(const char *s1, const char *s2);
+void		free_tab(char **tab);
+int			is_whitespace(char c);
+int			is_quotation_mark(char c);
+int			is_special_char(char c);
+void		signal_handler(t_sig_mode mode);
+void		signal_handler_heredoc(t_sig_mode mode);
+void		print_signal_exit(int status);
+void		heredoc_interrupt(int signum);
+void		main_heredoc_interrupt(int signum);
+char		**tokenizer(char *str);
+void		expand_tokens(char **tokens, char ***env_ptr, int *exit_status);
+void		strip_quotes(char **tokens);
+char		*expand_token(char *token, char ***env_ptr, int *exit_status);
+				t_exp_tmp params);
+int			is_expandable_char(char c);
+char		*ft_strjoin_char1(char *str, char c);
+char		**append_tab(char **tab, char *str);
+char		**split_tokens(char **tokens);
+t_cmd_group	*init_cmd_group(char *line, char ***env_ptr, int *exit_status);
+bool		is_heredoc_token(char *token);
+bool		is_append_token(char *token);
+bool		is_simple_redirect(char *token, char c);
+bool		is_pipe_token(char *token);
+bool		is_valid_tokens(char *line);
+bool		is_valid_tokens_np(char *line);
+bool		is_redirect(char *str);
+bool		is_valid_pipes(char **tokens, int i);
+bool		is_valid_redirect(char **tokens, int i);
+void		put_err_parese_redirect(char *tokens);
+int			next_after_redirect(char **tab, int index);
+char		**get_in_filenames(char **tab);
+char		**get_out_filenames(char **tab);
+char		*get_cmd(char **tab);
+char		**get_argv(char **tab);
+void		set_in_files(t_cmd_group *node);
+void		set_out_files(t_cmd_group *node);
+t_infiles	*new_infile(char *filename, bool is_h, char *lim);
+t_outfiles	*new_outfile(char *filename, bool is_append);
+void		print_cmd_group(t_cmd_group *g);
+int			execute_command(t_cmd_group *cmd_lines);
+int			cmd_len(t_cmd_group *cmd_lines);
+char		*find_cmd(char *cmd, char **env);
+int			open_pipes(int pipes[MAX_PIPE][2], int process_num);
+void		close_pipes(int pipes[MAX_PIPE][2], int process_num);
+void		close_all_fd(t_cmd_group *cmd_lines);
+				t_cmd_group *cmd_lines);
+				t_cmd_group *cur, int process_num);
+				t_cmd_group *cmd_lines);
+				t_cmd_group *cmd_lines, int closed_process);
+				t_cmd_group *cmd_lines, int process_num);
+int			loop_open(t_cmd_group *cmd_lines);
+int			loop_in(t_cmd_group *cur);
+int			loop_out(t_cmd_group *cur);
+t_cmd_group	*get_cmd_at(t_cmd_group *cmd_lines, int index);
+void		exec_cmd_not_found(t_cmd_group *cur);
+int			run_single_builtin(t_cmd_group *cmd_lines);
+void		ft_memmove_argv(char **argv);
+int			heredoc(t_cmd_group *cur);
+void		read_til_lim(t_cmd_group *cur);
+void		heredoc_eof(t_cmd_group *cur);
+void		loop_heredoc(t_cmd_group *cmd_lines);
+int			check_in_access(char *filename, t_cmd_group *cur);
+int			check_out_access(char *filename, t_cmd_group *cur);
+void		fd_error_once(char *filename, t_cmd_group *cur, char *msg);
+void		close_old(t_cmd_group *cur);
+bool		is_completed_quotes(char *line);
+int			is_token(char *str);
+int			is_fully_quoted(char *src, int len);
+char		*clean_token(char *token);
+void		free_cmd_group(t_cmd_group *cmd_group);
+void		free_env(char **env);
+void		cleanup_shell(t_cmd_group *cmd_group, char **env);
+void		cleanup_error(t_cmd_group *cmd_group);
+void		free_tokens_only(char **tokens);
+void		free_segments(char **segments);
+void		exit_status_help_process_line(int *exit_status);
+void		init_cmd_node_help(t_cmd_group *node, char ***env_ptr);
+void		set_shlvl(char ***env_ptr);
+int			handle_time_keyword(char *line, char ***env_ptr, int *exit_status);
+int			handle_redirection(t_cmd_group *cur);
+bool		first_redirect_is_out(t_cmd_group *cur);
+void		print_diff(struct timeval s, struct timeval e, char *label);
+void		print_time_val(long sec, long usec, char *label);
+void		normalize_tv(long *sec, long *usec);
+minishell> 
+exit
+==214614== 
+==214614== HEAP SUMMARY:
+==214614==     in use at exit: 232,820 bytes in 235 blocks
+==214614==   total heap usage: 575 allocs, 340 frees, 258,586 bytes allocated
+==214614== 
+==214614== 1 bytes in 1 blocks are definitely lost in loss record 1 of 75
+==214614==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==214614==    by 0x1109BE: ft_strdup (in /home/slimvutt/42/project/minishell/minishell/42-mini/minishell)
+==214614==    by 0x10D0FD: handle_dollar_sign (expander_token.c:47)
+==214614==    by 0x10D23B: process_char (expander_token.c:77)
+==214614==    by 0x10D32B: expand_token (expander_token.c:117)
+==214614==    by 0x10CFA8: expand_tokens (expander.c:125)
+==214614==    by 0x10F1D6: init_cmd_node (parser_cmd.c:36)
+==214614==    by 0x10F4B2: build_cmd_groups (parser_cmd.c:86)
+==214614==    by 0x10F57E: init_cmd_group (parser_cmd.c:111)
+==214614==    by 0x109550: process_line (main.c:29)
+==214614==    by 0x10961D: handle_line (main.c:52)
+==214614==    by 0x1096A1: run_shell (main.c:73)
+==214614== 
+
+
+

@@ -1,0 +1,11 @@
+# Pipes
+Test  57: ✅💧 export GHOST=123 | env | grep GHOST 
+
+# redirects
+
+Test  66: ✅💧 echo <"./test_files/infile" <missing <"./test_files/infile" 
+Test  71: ✅💧 echo <"./test_files/infile_big" | echo <"./test_files/infile" 
+Test 103: ✅💧 cat <"./test_files/infile" >./test_files/invalid_permission 
+Test 104: ✅💧 cat >./test_files/invalid_permission <"./test_files/infile"
+Test 106: ✅💧 cat >./outfiles/outfile01 <missing 
+
