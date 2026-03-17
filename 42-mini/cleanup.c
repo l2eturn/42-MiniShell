@@ -6,11 +6,11 @@
 /*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/16 14:24:58 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/16 16:12:17 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+// #include "minishell.h"
  
 // static void	free_infiles(t_infiles *head)
 // {
@@ -43,10 +43,35 @@
 // 	}
 // }
  
+// static void	close_cmd_fds(t_cmd_group *node)
+// {
+// 	if (node->in_fd > 2)
+// 	{
+// 		close(node->in_fd);
+// 		node->in_fd = -1;
+// 	}
+// 	if (node->out_fd > 2)
+// 	{
+// 		close(node->out_fd);
+// 		node->out_fd = -1;
+// 	}
+// 	if (node->h_pipe[0] != -1)
+// 	{
+// 		close_fd(node->h_pipe[0]);
+// 		node->h_pipe[0] = -1;
+// 	}
+// 	if (node->h_pipe[1] != -1)
+// 	{
+// 		close_fd(node->h_pipe[1]);
+// 		node->h_pipe[1] = -1;
+// 	}
+// }
+ 
 // static void	free_cmd_node(t_cmd_group *node)
 // {
 // 	if (node == NULL)
 // 		return ;
+// 	close_cmd_fds(node);
 // 	free(node->cmds_str);
 // 	node->cmds_str = NULL;
 // 	free_tab(node->cmd_tokens);

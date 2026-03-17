@@ -4,6 +4,11 @@ Test  57: ✅💧 export GHOST=123 | env | grep GHOST
 # redirects
 
 Test  66: ✅💧 echo <"./test_files/infile" <missing <"./test_files/infile" 
+
+Test  69: ✅⚠️ echo <"./test_files/infile_big" | cat <"./test_files/infile" 
+mini error = ()
+bash error = ( Broken pipe)
+
 Test  71: ✅💧 echo <"./test_files/infile_big" | echo <"./test_files/infile" 
 Test 103: ✅💧 cat <"./test_files/infile" >./test_files/invalid_permission 
 Test 104: ✅💧 cat >./test_files/invalid_permission <"./test_files/infile"
