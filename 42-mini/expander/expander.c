@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 14:35:15 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/26 19:29:32 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* ── utils ───────────────────────────────────────────────────────────────── */
-
-/*
-** is_expandable_char — returns 1 if c can be part of a $VAR name.
-** Valid: alphanumeric, underscore, or '?' (for $?).
-*/
 int	is_expandable_char(char c)
 {
 	if (c == '\0')
@@ -27,10 +21,6 @@ int	is_expandable_char(char c)
 	return (0);
 }
 
-/*
-** ft_strjoin_char1 — append a single char to a string.
-** Returns a new heap string. Frees nothing (caller manages str).
-*/
 char	*ft_strjoin_char1(char *str, char c)
 {
 	char	*res;
@@ -47,8 +37,6 @@ char	*ft_strjoin_char1(char *str, char c)
 	res[i + 1] = '\0';
 	return (res);
 }
-
-/* ── quote stripping ─────────────────────────────────────────────────────── */
 
 static char	*strip_token_quotes(char *token)
 {
@@ -99,17 +87,6 @@ void	strip_quotes(char **tokens)
 	}
 }
 
-/* ── public API ──────────────────────────────────────────────────────────── */
-
-/*
-** expand_tokens — walk every token and expand $VAR / $? in place.
-**
-** Tokens that contain no '$' are left untouched.
-** Tokens that do contain '$' are replaced with the expanded string.
-** Quote semantics are handled inside expand_token:
-**   - inside ''  → $ is literal
-**   - inside ""  → $ is expanded
-*/
 void	expand_tokens(char **tokens, char ***env_ptr, int *exit_status)
 {
 	int		i;

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_check_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 14:38:30 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/26 19:29:53 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* ── redirect classification ─────────────────────────────────────────────── */
 
 bool	is_redirect(char *str)
 {
@@ -27,12 +25,6 @@ bool	is_redirect(char *str)
 	return (false);
 }
 
-/* ── pipe validation ─────────────────────────────────────────────────────── */
-
-/*
-** is_valid_pipes — returns false if pipe is in an invalid position.
-** Invalid: at start, after another pipe, after a redirect, or at end.
-*/
 bool	is_valid_pipes(char **tokens, int i)
 {
 	if (ft_strncmp(tokens[i], "|", 2) == 0)
@@ -48,12 +40,6 @@ bool	is_valid_pipes(char **tokens, int i)
 	return (true);
 }
 
-/* ── redirect validation ─────────────────────────────────────────────────── */
-
-/*
-** is_valid_redirect — returns false if redirect has no valid target.
-** Invalid: redirect at end, or followed by another operator.
-*/
 bool	is_valid_redirect(char **tokens, int i)
 {
 	if (is_redirect(tokens[i]))
@@ -68,8 +54,6 @@ bool	is_valid_redirect(char **tokens, int i)
 	return (true);
 }
 
-/* ── error printing ──────────────────────────────────────────────────────── */
-
 void	put_err_parese_redirect(char *tokens)
 {
 	if (!tokens)
@@ -81,8 +65,6 @@ void	put_err_parese_redirect(char *tokens)
 	ft_putstr_fd(tokens, 2);
 	ft_putendl_fd("'", 2);
 }
-
-/* ── no-print validation (used for pipe completion check) ────────────────── */
 
 bool	is_valid_tokens_np(char *line)
 {

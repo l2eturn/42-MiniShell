@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 14:59:32 by cduangpl          #+#    #+#             */
-/*   Updated: 2026/02/27 15:00:30 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/26 19:30:59 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* ── lexer utils ─────────────────────────────────────────────────────────── */
 
 int	is_whitespace(char c)
 {
@@ -30,8 +28,6 @@ int	is_special_char(char c)
 		|| c == '(' || c == ')' || c == '&');
 }
 
-/* ── memory utils ────────────────────────────────────────────────────────── */
-
 void	*ft_safe_calloc(size_t count, size_t size, char *msg)
 {
 	void	*ptr;
@@ -41,8 +37,6 @@ void	*ft_safe_calloc(size_t count, size_t size, char *msg)
 		exit_msg(msg);
 	return (ptr);
 }
-
-/* ── string utils ────────────────────────────────────────────────────────── */
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

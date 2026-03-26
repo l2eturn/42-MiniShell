@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/14 20:02:50 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/26 19:30:37 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,6 @@ char	**append_tab(char **tab, char *str)
 	return (new_tab);
 }
 
-/* ── split_tokens ────────────────────────────────────────────────────────── */
-
-/*
-** join_segment — join tokens[start..end-1] into one space-separated string.
-** Used by split_tokens to reconstruct each pipe segment as a string.
-*/
 static char	*join_segment(char **tokens, int start, int end)
 {
 	char	*result;

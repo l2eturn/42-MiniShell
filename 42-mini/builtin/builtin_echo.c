@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 13:37:30 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/26 19:27:53 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-** is_echo_flag — returns 1 if arg is a real -n flag.
-** Quoted tokens are marked with \x01 prefix and are never flags.
-*/
 static int	is_echo_flag(char *arg)
 {
 	if (!arg || arg[0] == '\x01')
@@ -23,9 +19,6 @@ static int	is_echo_flag(char *arg)
 	return (is_valid_echo_flag(arg));
 }
 
-/*
-** echo_str — return the printable string (skip \x01 prefix if present).
-*/
 static char	*echo_str(char *arg)
 {
 	if (arg && arg[0] == '\x01')

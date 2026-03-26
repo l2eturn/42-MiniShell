@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_dispatch.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 14:33:41 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/26 19:27:45 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* ── fd cleanup ──────────────────────────────────────────────────────────── */
 
 void	close_builtin_fds(t_cmd_group *cmd)
 {
@@ -21,8 +19,6 @@ void	close_builtin_fds(t_cmd_group *cmd)
 	cmd->in_fd = STDIN_FILENO;
 	cmd->out_fd = STDOUT_FILENO;
 }
-
-/* ── is_builtin ──────────────────────────────────────────────────────────── */
 
 int	is_builtin(char *cmd)
 {
@@ -37,12 +33,6 @@ int	is_builtin(char *cmd)
 		|| ft_strncmp(cmd, "unset", 255) == 0);
 }
 
-/* ── execute_builtin (in child process / pipeline) ───────────────────────── */
-/*
-** execute_builtin — dispatch to the correct builtin.
-** Called inside a forked child — exit() is safe here.
-** cd/export/unset changes do NOT affect the parent shell.
-*/
 int	execute_builtin(t_cmd_group *cmd)
 {
 	if (cmd == NULL || cmd->argv == NULL || cmd->argv[0] == NULL)
@@ -64,16 +54,6 @@ int	execute_builtin(t_cmd_group *cmd)
 	return (1);
 }
 
-/* ── execute_builtin_main (in parent process) ────────────────────────────── */
-/*
-** execute_builtin_main — dispatch to the correct builtin.
-** Called in the PARENT process for single commands (no pipe).
-** This means:
-**   - cd    actually changes the shell's directory
-**   - export/unset actually modify the shell's env
-**   - exit  actually exits the shell process
-**   - echo/pwd/env behave the same as in child
-*/
 int	execute_builtin_main(t_cmd_group *cmd)
 {
 	if (cmd == NULL || cmd->argv == NULL || cmd->argv[0] == NULL)

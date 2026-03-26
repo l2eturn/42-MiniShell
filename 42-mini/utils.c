@@ -3,24 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 15:00:55 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/26 19:30:50 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* ── fd utils ────────────────────────────────────────────────────────────── */
 
 void	close_fd(int fd)
 {
 	if (fd > 2)
 		close(fd);
 }
-
-/* ── array utils ─────────────────────────────────────────────────────────── */
 
 int	tab_len(char **tab)
 {
@@ -72,8 +68,6 @@ void	free_tab(char **tab)
 		free(tab[i++]);
 	free(tab);
 }
-
-/* ── env utils ───────────────────────────────────────────────────────────── */
 
 char	*ft_getenv(char **env, const char *key)
 {
