@@ -32,12 +32,14 @@ SRC =   main.c \
         builtin/builtin_utils2.c \
         builtin/builtin_time.c \
         builtin/builtin_time_utils.c \
+		builtin/builtin_exit_helper.c \
         expander/expander.c \
         expander/expander_token.c \
         expander/expander_var.c \
         executor/exec_iofiles_utils.c \
         executor/exec_cmd.c \
         executor/exec_cmd2.c \
+		executor/exec_cmd2_helper.c \
         executor/exec_cmd3.c \
         executor/exec_cmd4.c \
         executor/exec_cmd_utils.c \

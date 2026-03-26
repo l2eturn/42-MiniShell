@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/16 14:40:30 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/26 18:28:13 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*handle_dollar_sign(char *token, int *i, char ***env_ptr,
 {
 	char	*addition;
 	char	*tmp;
- 
+
 	if (!is_expandable_char(token[*i + 1]))
 	{
 		tmp = ft_strdup("");
@@ -43,7 +43,7 @@ static char	*process_char(char *expanded, char *token, int *i,
 {
 	char	*addition;
 	char	*tmp;
- 
+
 	update_quote_status(token[*i], params.in_single, params.in_double);
 	if (token[*i] != '$')
 	{
@@ -67,7 +67,7 @@ char	*expand_token(char *token, char ***env_ptr, int *exit_status)
 	bool		in_single;
 	bool		in_double;
 	t_exp_tmp	params;
- 
+
 	expanded = ft_strdup("");
 	i = 0;
 	in_single = false;

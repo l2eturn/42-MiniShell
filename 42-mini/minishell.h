@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slimvutt <slimvut@fpgij;dgj;ds.com>        +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/03 21:10:11 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/26 18:42:21 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,10 @@ int			builtin_exit(t_cmd_group *cmd);
 int			builtin_export(t_cmd_group *cmd, char ***env_ptr);
 int			builtin_pwd(t_cmd_group *cmd);
 int			builtin_unset(t_cmd_group *cmd, char ***env_ptr);
+int			exit_with_arg(t_cmd_group *cmd);
+void		builtin_exit_help(t_cmd_group *cmd);
+bool		is_in_pipe(t_cmd_group *cmd);
+void		do_exit(t_cmd_group *cmd, int exit_code);
 
 bool		is_valid_identifier(char *arg);
 int			find_env_index(char **env, char *arg);

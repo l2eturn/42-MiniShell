@@ -6,76 +6,17 @@
 /*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 15:50:26 by cduangpl          #+#    #+#             */
-/*   Updated: 2026/03/16 13:54:59 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/26 18:31:36 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
- 
-static void	child_exit(t_cmd_group *cmd_lines, char ***env_ptr, int code)
-{
-	free_cmd_group(cmd_lines);
-	free_env(*env_ptr);
-	rl_clear_history();
-	exit(code);
-}
- 
-static void	exec_execve(t_cmd_group *cmd_lines, char ***env_ptr,
-	char **argv, char *path)
-{
-	execve(path, argv, *env_ptr);
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putendl_fd(argv[0], STDERR_FILENO);
-	free(path);
-	child_exit(cmd_lines, env_ptr, 126);
-}
- 
-static void	exec_path(t_cmd_group *cur, t_cmd_group *cmd_lines,
-	char ***env_ptr)
-{
-	char	*path;
-	int		ret;
- 
-	ft_memmove_argv(cur->argv);
-	if (cur->cmd[0] == '\x01')
-		ft_memmove(cur->cmd, cur->cmd + 1, ft_strlen(cur->cmd));
-	if (is_builtin(cur->cmd))
-	{
-		ret = execute_builtin(cur);
-		child_exit(cmd_lines, env_ptr, ret);
-	}
-	path = find_cmd(cur->cmd, *env_ptr);
-	if (!path)
-	{
-		exec_cmd_not_found(cur);
-		child_exit(cmd_lines, env_ptr, 127);
-	}
-	exec_execve(cmd_lines, env_ptr, cur->argv, path);
-}
- 
-void	exec(int index, int pipes[MAX_PIPE][2],
-	t_cmd_group *cmd_lines, int process_num)
-{
-	t_cmd_group	*cur;
- 
-	signal_handler(CHILD);
-	cur = get_cmd_at(cmd_lines, index);
-	dup_process(index, pipes, cur, process_num);
-	close_all(pipes, process_num, cmd_lines);
-	cur->in_fd = STDIN_FILENO;
-	cur->out_fd = STDOUT_FILENO;
-	if (cur->is_error)
-		child_exit(cmd_lines, cur->env_ptr, 1);
-	if (!cur->cmd)
-		child_exit(cmd_lines, cur->env_ptr, 0);
-	exec_path(cur, cmd_lines, cur->env_ptr);
-}
- 
+
 static int	exec_one(int index, int pipes[MAX_PIPE][2],
 	t_cmd_group *cmd_lines, int process_num)
 {
 	int	pid;
- 
+
 	pid = fork();
 	if (pid == -1)
 		return (-1);
@@ -83,13 +24,13 @@ static int	exec_one(int index, int pipes[MAX_PIPE][2],
 		exec(index, pipes, cmd_lines, process_num);
 	return (pid);
 }
- 
+
 static int	fork_all(int pipes[MAX_PIPE][2],
 	t_cmd_group *cmd_lines, int process_num)
 {
 	int	pid[MAX_PROCESS];
 	int	i;
- 
+
 	i = 0;
 	while (i < process_num)
 	{
@@ -99,12 +40,12 @@ static int	fork_all(int pipes[MAX_PIPE][2],
 	close_all(pipes, process_num, cmd_lines);
 	return (wait_pid_process(pid, process_num, cmd_lines));
 }
- 
+
 int	execute_command(t_cmd_group *cmd_lines)
 {
 	int	pipes[MAX_PIPE][2];
 	int	process_num;
- 
+
 	if (!cmd_lines)
 		return (0);
 	process_num = cmd_len(cmd_lines);
@@ -123,301 +64,3 @@ int	execute_command(t_cmd_group *cmd_lines)
 	signal_handler(MAIN);
 	return (process_num);
 }
-
-// #include "minishell.h"
-
-// static void	child_exit(t_cmd_group *cmd_lines, char **env, int code)
-// {
-// 	free_cmd_group(cmd_lines);
-// 	free_env(env);
-// 	rl_clear_history();
-// 	exit(code);
-// }
-
-// static void	exec_path(t_cmd_group *cur, t_cmd_group *cmd_lines,
-// 	char **env)
-// {
-// 	char	*path;
-
-// 	ft_memmove_argv(cur->argv);
-// 	if (cur->cmd[0] == '\x01')
-// 		ft_memmove(cur->cmd, cur->cmd + 1, ft_strlen(cur->cmd));
-// 	if (is_builtin(cur->cmd))
-// 		child_exit(cmd_lines, env, execute_builtin(cur));
-// 	path = find_cmd(cur->cmd, env);
-// 	if (!path)
-// 	{
-// 		exec_cmd_not_found(cur);
-// 		child_exit(cmd_lines, env, 127);
-// 	}
-// 	execve(path, cur->argv, env);
-// 	ft_putstr_fd("minishell: ", STDERR_FILENO);
-// 	ft_putendl_fd(cur->cmd, STDERR_FILENO);
-// 	free(path);
-// 	child_exit(cmd_lines, env, 126);
-// }
-
-// void	exec(int index, int pipes[MAX_PIPE][2],
-// 	t_cmd_group *cmd_lines, int process_num)
-// {
-// 	t_cmd_group	*cur;
-// 	char		**env;
-
-// 	signal_handler(CHILD);
-// 	cur = get_cmd_at(cmd_lines, index);
-// 	env = *cur->env_ptr;
-// 	dup_process(index, pipes, cur, process_num);
-// 	close_all(pipes, process_num, cmd_lines);
-// 	cur->in_fd = STDIN_FILENO;
-// 	cur->out_fd = STDOUT_FILENO;
-// 	if (cur->is_error)
-// 		child_exit(cmd_lines, env, 1);
-// 	if (!cur->cmd)
-// 		child_exit(cmd_lines, env, 0);
-// 	exec_path(cur, cmd_lines, env);
-// }
-
-// static int	exec_one(int index, int pipes[MAX_PIPE][2],
-// 	t_cmd_group *cmd_lines, int process_num)
-// {
-// 	int	pid;
-
-// 	pid = fork();
-// 	if (pid == -1)
-// 		return (-1);
-// 	if (pid == 0)
-// 		exec(index, pipes, cmd_lines, process_num);
-// 	return (pid);
-// }
-
-// static int	fork_all(int pipes[MAX_PIPE][2],
-// 	t_cmd_group *cmd_lines, int process_num)
-// {
-// 	int	pid[MAX_PROCESS];
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < process_num)
-// 	{
-// 		pid[i] = exec_one(i, pipes, cmd_lines, process_num);
-// 		i++;
-// 	}
-// 	close_all(pipes, process_num, cmd_lines);
-// 	return (wait_pid_process(pid, process_num, cmd_lines));
-// }
-
-// int	execute_command(t_cmd_group *cmd_lines)
-// {
-// 	int	pipes[MAX_PIPE][2];
-// 	int	process_num;
-
-// 	if (!cmd_lines)
-// 		return (0);
-// 	process_num = cmd_len(cmd_lines);
-// 	if (loop_open(cmd_lines) != 0 && !cmd_lines->is_heredoc)
-// 	{
-// 		if (process_num == 1 || g_status == SIGINT)
-// 			return (cmd_lines->exit_status);
-// 	}
-// 	if (process_num == 1 && cmd_lines->cmd
-// 		&& is_builtin(cmd_lines->cmd) && !cmd_lines->is_error)
-// 		return (run_single_builtin(cmd_lines));
-// 	if (open_pipes(pipes, process_num) == -1)
-// 		return (1);
-// 	signal_handler(MAIN_CHILD);
-// 	process_num = fork_all(pipes, cmd_lines, process_num);
-// 	signal_handler(MAIN);
-// 	return (process_num);
-// }
-
-// #include "minishell.h"
- 
-// static void	child_exit(t_cmd_group *cmd_lines, char **env, int code)
-// {
-// 	free_cmd_group(cmd_lines);
-// 	free_env(env);
-// 	rl_clear_history();
-// 	exit(code);
-// }
- 
-// static void	exec_path(t_cmd_group *cur, t_cmd_group *cmd_lines,
-// 	char **env)
-// {
-// 	char	*path;
- 
-// 	ft_memmove_argv(cur->argv);
-// 	if (cur->cmd[0] == '\x01')
-// 		ft_memmove(cur->cmd, cur->cmd + 1, ft_strlen(cur->cmd));
-// 	if (is_builtin(cur->cmd))
-// 		child_exit(cmd_lines, env, execute_builtin(cur));
-// 	path = find_cmd(cur->cmd, env);
-// 	if (!path)
-// 	{
-// 		exec_cmd_not_found(cur);
-// 		child_exit(cmd_lines, env, 127);
-// 	}
-// 	execve(path, cur->argv, env);
-// 	ft_putstr_fd("minishell: ", STDERR_FILENO);
-// 	ft_putendl_fd(cur->cmd, STDERR_FILENO);
-// 	free(path);
-// 	child_exit(cmd_lines, env, 126);
-// }
- 
-// void	exec(int index, int pipes[MAX_PIPE][2],
-// 	t_cmd_group *cmd_lines, int process_num)
-// {
-// 	t_cmd_group	*cur;
-// 	char		**env;
- 
-// 	signal_handler(CHILD);
-// 	cur = get_cmd_at(cmd_lines, index);
-// 	env = *cur->env_ptr;
-// 	dup_process(index, pipes, cur, process_num);
-// 	close_all(pipes, process_num, cmd_lines);
-// 	cur->in_fd = STDIN_FILENO;
-// 	cur->out_fd = STDOUT_FILENO;
-// 	if (cur->is_error)
-// 		child_exit(cmd_lines, env, 1);
-// 	if (!cur->cmd)
-// 		child_exit(cmd_lines, env, 0);
-// 	exec_path(cur, cmd_lines, env);
-// }
- 
-// static int	exec_one(int index, int pipes[MAX_PIPE][2],
-// 	t_cmd_group *cmd_lines, int process_num)
-// {
-// 	int	pid;
- 
-// 	pid = fork();
-// 	if (pid == -1)
-// 		return (-1);
-// 	if (pid == 0)
-// 		exec(index, pipes, cmd_lines, process_num);
-// 	return (pid);
-// }
- 
-// static int	fork_all(int pipes[MAX_PIPE][2],
-// 	t_cmd_group *cmd_lines, int process_num)
-// {
-// 	int	pid[MAX_PROCESS];
-// 	int	i;
- 
-// 	i = 0;
-// 	while (i < process_num)
-// 	{
-// 		pid[i] = exec_one(i, pipes, cmd_lines, process_num);
-// 		i++;
-// 	}
-// 	close_all(pipes, process_num, cmd_lines);
-// 	return (wait_pid_process(pid, process_num, cmd_lines));
-// }
- 
-// int	execute_command(t_cmd_group *cmd_lines)
-// {
-// 	int	pipes[MAX_PIPE][2];
-// 	int	process_num;
- 
-// 	if (!cmd_lines)
-// 		return (0);
-// 	process_num = cmd_len(cmd_lines);
-// 	if (loop_open(cmd_lines) != 0 && !cmd_lines->is_heredoc)
-// 	{
-// 		if (process_num == 1 || g_status == SIGINT)
-// 			return (cmd_lines->exit_status);
-// 	}
-// 	if (process_num == 1 && cmd_lines->cmd
-// 		&& is_builtin(cmd_lines->cmd) && !cmd_lines->is_error)
-// 		return (run_single_builtin(cmd_lines));
-// 	if (open_pipes(pipes, process_num) == -1)
-// 		return (1);
-// 	signal_handler(MAIN_CHILD);
-// 	process_num = fork_all(pipes, cmd_lines, process_num);
-// 	signal_handler(MAIN);
-// 	return (process_num);
-// }
- 
-
-// #include "minishell.h"
-
-// void	exec(int index, int pipes[MAX_PIPE][2],
-// 	t_cmd_group *cmd_lines, int process_num)
-// {
-// 	t_cmd_group	*cur;
-// 	char		*path;
-
-// 	signal_handler(CHILD);
-// 	cur = get_cmd_at(cmd_lines, index);
-// 	dup_process(index, pipes, cur, process_num);
-// 	close_all(pipes, process_num, cmd_lines);
-// 	cur->in_fd = STDIN_FILENO;
-// 	cur->out_fd = STDOUT_FILENO;
-// 	if (cur->is_error)
-// 		exit(1);
-// 	if (!cur->cmd)
-// 		exit(0);
-// 	ft_memmove_argv(cur->argv);
-// 	if (cur->cmd[0] == '\x01')
-// 		ft_memmove(cur->cmd, cur->cmd + 1, ft_strlen(cur->cmd));
-// 	if (is_builtin(cur->cmd))
-// 		exit(execute_builtin(cur));
-// 	path = find_cmd(cur->cmd, *cur->env_ptr);
-// 	if (!path)
-// 		exec_cmd_not_found(cur);
-// 	execve(path, cur->argv, *cur->env_ptr);
-// 	ft_putstr_fd("minishell: ", STDERR_FILENO);
-// 	ft_putendl_fd(cur->cmd, STDERR_FILENO);
-// 	exit(126);
-// }
-
-// static int	exec_one(int index, int pipes[MAX_PIPE][2],
-// 	t_cmd_group *cmd_lines, int process_num)
-// {
-// 	int	pid;
-
-// 	pid = fork();
-// 	if (pid == -1)
-// 		return (-1);
-// 	if (pid == 0)
-// 		exec(index, pipes, cmd_lines, process_num);
-// 	return (pid);
-// }
-
-// static int	fork_all(int pipes[MAX_PIPE][2],
-// 	t_cmd_group *cmd_lines, int process_num)
-// {
-// 	int	pid[MAX_PROCESS];
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < process_num)
-// 	{
-// 		pid[i] = exec_one(i, pipes, cmd_lines, process_num);
-// 		i++;
-// 	}
-// 	close_all(pipes, process_num, cmd_lines);
-// 	return (wait_pid_process(pid, process_num, cmd_lines));
-// }
-
-// int	execute_command(t_cmd_group *cmd_lines)
-// {
-// 	int	pipes[MAX_PIPE][2];
-// 	int	process_num;
-
-// 	if (!cmd_lines)
-// 		return (0);
-// 	process_num = cmd_len(cmd_lines);
-// 	if (loop_open(cmd_lines) != 0 && !cmd_lines->is_heredoc)
-// 	{
-// 		if (process_num == 1 || g_status == SIGINT)
-// 			return (cmd_lines->exit_status);
-// 	}
-// 	if (process_num == 1 && cmd_lines->cmd
-// 		&& is_builtin(cmd_lines->cmd) && !cmd_lines->is_error)
-// 		return (run_single_builtin(cmd_lines));
-// 	if (open_pipes(pipes, process_num) == -1)
-// 		return (1);
-// 	signal_handler(MAIN_CHILD);
-// 	process_num = fork_all(pipes, cmd_lines, process_num);
-// 	signal_handler(MAIN);
-// 	return (process_num);
-// }
