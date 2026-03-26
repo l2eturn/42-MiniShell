@@ -1,0 +1,121 @@
+=== error from heredoc ===
+
+==29802== 4 bytes in 1 blocks are still reachable in loss record 3 of 89
+==29802==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29802==    by 0x110A01: ft_strdup (in /home/slimvutt/42/project/minishell/minishell/42-mini/minishell)
+==29802==    by 0x10EF21: append_tab (utils_tab.c:31)
+==29802==    by 0x110097: get_argv (parser_get_info.c:85)
+==29802==    by 0x10F2A7: init_cmd_node (parser_cmd.c:46)
+==29802==    by 0x10F4F5: build_cmd_groups (parser_cmd.c:86)
+==29802==    by 0x10F5C1: init_cmd_group (parser_cmd.c:111)
+==29802==    by 0x109550: process_line (main.c:29)
+==29802==    by 0x10961D: handle_line (main.c:52)
+==29802==    by 0x1096A1: run_shell (main.c:73)
+==29802==    by 0x109838: main (main.c:121)
+==29802== 
+==29802== 4 bytes in 1 blocks are still reachable in loss record 4 of 89
+==29802==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29802==    by 0x110A01: ft_strdup (in /home/slimvutt/42/project/minishell/minishell/42-mini/minishell)
+==29802==    by 0x10F2CF: init_cmd_node (parser_cmd.c:48)
+==29802==    by 0x10F4F5: build_cmd_groups (parser_cmd.c:86)
+==29802==    by 0x10F5C1: init_cmd_group (parser_cmd.c:111)
+==29802==    by 0x109550: process_line (main.c:29)
+==29802==    by 0x10961D: handle_line (main.c:52)
+==29802==    by 0x1096A1: run_shell (main.c:73)
+==29802==    by 0x109838: main (main.c:121)
+==29802== 
+==29802== 8 bytes in 1 blocks are still reachable in loss record 5 of 89
+==29802==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29802==    by 0x110A01: ft_strdup (in /home/slimvutt/42/project/minishell/minishell/42-mini/minishell)
+==29802==    by 0x10C28D: set_env_var (builtin_utils.c:86)
+==29802==    by 0x109D27: set_shlvl (utils3.c:30)
+==29802==    by 0x10982C: main (main.c:120)
+
+==29802== 11 bytes in 1 blocks are still reachable in loss record 12 of 89
+==29802==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29802==    by 0x110A01: ft_strdup (in /home/slimvutt/42/project/minishell/minishell/42-mini/minishell)
+==29802==    by 0x10F1E3: init_cmd_node (parser_cmd.c:34)
+==29802==    by 0x10F4F5: build_cmd_groups (parser_cmd.c:86)
+==29802==    by 0x10F5C1: init_cmd_group (parser_cmd.c:111)
+==29802==    by 0x109550: process_line (main.c:29)
+==29802==    by 0x10961D: handle_line (main.c:52)
+==29802==    by 0x1096A1: run_shell (main.c:73)
+==29802==    by 0x109838: main (main.c:121)
+==29802== 
+==29802== 11 bytes in 3 blocks are still reachable in loss record 13 of 89
+==29802==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29802==    by 0x111127: ft_calloc (in /home/slimvutt/42/project/minishell/minishell/42-mini/minishell)
+==29802==    by 0x10CD3C: strip_token_quotes (expander.c:60)
+==29802==    by 0x10CEB8: strip_quotes (expander.c:92)
+==29802==    by 0x10F229: init_cmd_node (parser_cmd.c:37)
+==29802==    by 0x10F4F5: build_cmd_groups (parser_cmd.c:86)
+==29802==    by 0x10F5C1: init_cmd_group (parser_cmd.c:111)
+==29802==    by 0x109550: process_line (main.c:29)
+==29802==    by 0x10961D: handle_line (main.c:52)
+==29802==    by 0x1096A1: run_shell (main.c:73)
+==29802==    by 0x109838: main (main.c:121)
+
+==29802== 16 bytes in 1 blocks are still reachable in loss record 21 of 89
+==29802==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29802==    by 0x111127: ft_calloc (in /home/slimvutt/42/project/minishell/minishell/42-mini/minishell)
+==29802==    by 0x10EEA8: append_tab (utils_tab.c:22)
+==29802==    by 0x110097: get_argv (parser_get_info.c:85)
+==29802==    by 0x10F2A7: init_cmd_node (parser_cmd.c:46)
+==29802==    by 0x10F4F5: build_cmd_groups (parser_cmd.c:86)
+==29802==    by 0x10F5C1: init_cmd_group (parser_cmd.c:111)
+==29802==    by 0x109550: process_line (main.c:29)
+==29802==    by 0x10961D: handle_line (main.c:52)
+==29802==    by 0x1096A1: run_shell (main.c:73)
+==29802==    by 0x109838: main (main.c:121)
+
+==29802== 32 bytes in 1 blocks are still reachable in loss record 26 of 89
+==29802==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29802==    by 0x111127: ft_calloc (in /home/slimvutt/42/project/minishell/minishell/42-mini/minishell)
+==29802==    by 0x109C21: ft_safe_calloc (utils2.c:39)
+==29802==    by 0x10A1F5: tokenizer (tokenizer.c:107)
+==29802==    by 0x10F1F6: init_cmd_node (parser_cmd.c:35)
+==29802==    by 0x10F4F5: build_cmd_groups (parser_cmd.c:86)
+==29802==    by 0x10F5C1: init_cmd_group (parser_cmd.c:111)
+==29802==    by 0x109550: process_line (main.c:29)
+==29802==    by 0x10961D: handle_line (main.c:52)
+==29802==    by 0x1096A1: run_shell (main.c:73)
+==29802==    by 0x109838: main (main.c:121)
+==29802== 
+==29802== 32 bytes in 1 blocks are still reachable in loss record 27 of 89
+==29802==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29802==    by 0x111127: ft_calloc (in /home/slimvutt/42/project/minishell/minishell/42-mini/minishell)
+==29802==    by 0x109C21: ft_safe_calloc (utils2.c:39)
+==29802==    by 0x10D621: new_infile (exec_iofiles_utils.c:19)
+==29802==    by 0x110142: add_infile_to_list (parser_infiles.c:33)
+==29802==    by 0x110228: process_input_redirect (parser_infiles.c:49)
+==29802==    by 0x110324: set_in_files (parser_infiles.c:69)
+==29802==    by 0x10F304: init_cmd_node (parser_cmd.c:52)
+==29802==    by 0x10F4F5: build_cmd_groups (parser_cmd.c:86)
+==29802==    by 0x10F5C1: init_cmd_group (parser_cmd.c:111)
+==29802==    by 0x109550: process_line (main.c:29)
+==29802==    by 0x10961D: handle_line (main.c:52)
+
+==29802== 128 bytes in 1 blocks are still reachable in loss record 35 of 89
+==29802==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29802==    by 0x111127: ft_calloc (in /home/slimvutt/42/project/minishell/minishell/42-mini/minishell)
+==29802==    by 0x109C21: ft_safe_calloc (utils2.c:39)
+==29802==    by 0x10F430: build_cmd_groups (parser_cmd.c:76)
+==29802==    by 0x10F5C1: init_cmd_group (parser_cmd.c:111)
+==29802==    by 0x109550: process_line (main.c:29)
+==29802==    by 0x10961D: handle_line (main.c:52)
+==29802==    by 0x1096A1: run_shell (main.c:73)
+==29802==    by 0x109838: main (main.c:121)
+
+==29802== 432 bytes in 1 blocks are still reachable in loss record 39 of 89
+==29802==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29802==    by 0x111127: ft_calloc (in /home/slimvutt/42/project/minishell/minishell/42-mini/minishell)
+==29802==    by 0x109718: init_env (main.c:91)
+==29802==    by 0x109814: main (main.c:118)
+
+==29802== 3,829 bytes in 52 blocks are still reachable in loss record 58 of 89
+==29802==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29802==    by 0x110A01: ft_strdup (in /home/slimvutt/42/project/minishell/minishell/42-mini/minishell)
+==29802==    by 0x109768: init_env (main.c:97)
+==29802==    by 0x109814: main (main.c:118)
+
+
