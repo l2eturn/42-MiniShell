@@ -6,7 +6,7 @@
 /*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/03/26 18:22:09 by slimvutt         ###   ########.fr       */
+/*   Updated: 2026/03/29 19:45:30 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,46 @@ static void	free_cmd_node(t_cmd_group *node)
 	node->out_files = NULL;
 }
 
-void	free_cmd_group(t_cmd_group *cmd_group)
-{
-	t_cmd_group	*current;
-	t_cmd_group	*next;
+// void	free_cmd_group(t_cmd_group *cmd_group)
+// {
+// 	t_cmd_group	*current;
+// 	t_cmd_group	*next;
 
-	current = cmd_group;
-	while (current != NULL)
-	{
-		next = current->next;
-		free_cmd_node(current);
-		current = next;
-	}
-	free(cmd_group);
+// 	current = cmd_group;
+// 	while (current != NULL)
+// 	{
+// 		next = current->next;
+// 		free_cmd_node(current);
+// 		current = next;
+// 	}
+// 	free(cmd_group);
+// }
+
+void    free_cmd_group(t_cmd_group *cmd_group)
+{
+    t_cmd_group *current;
+    t_cmd_group *next;
+
+    current = cmd_group;
+    while (current != NULL)
+    {
+        next = current->next;
+        
+        //
+        if (current->in_fd > 2)
+        {
+            close(current->in_fd);
+            current->in_fd = -1;
+        }
+        if (current->out_fd > 2)
+        {
+            close(current->out_fd);
+            current->out_fd = -1;
+        }
+        //
+
+        free_cmd_node(current);
+        current = next;
+    }
+
 }

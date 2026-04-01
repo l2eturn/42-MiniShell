@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cduangpl <cduangpl@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slimvutt <slimvutt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 00:00:00 by minishell         #+#    #+#             */
-/*   Updated: 2026/02/27 15:37:29 by cduangpl         ###   ########.fr       */
+/*   Updated: 2026/03/29 21:19:12 by slimvutt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	read_til_lim(t_cmd_group *cur)
 {
 	char	*line;
 
+	rl_catch_signals = 0;
 	while (g_status != SIGINT)
 	{
 		line = readline("> ");
@@ -73,37 +74,127 @@ void	read_til_lim(t_cmd_group *cur)
 int	heredoc(t_cmd_group *cur)
 {
 	int	pid;
-	int	exit_status;
+	int	exit_status = 0;
 
 	if (pipe(cur->h_pipe) == -1)
 		return (-1);
 	pid = fork();
 	if (pid == -1)
+	{
+		close(cur->h_pipe[0]);
+		close(cur->h_pipe[1]);
 		return (-1);
+	}
 	if (pid == 0)
 	{
+		close(cur->h_pipe[0]);
 		signal_handler(HEREDOC);
 		read_til_lim(cur);
+		close(cur->h_pipe[1]);
+		if (g_status == SIGINT)
+			exit_errno(130);
 		exit_errno(0);
 	}
+	
 	signal_handler(MAIN_HEREDOC);
-	close_fd(cur->h_pipe[1]);
+	
+	if (cur->h_pipe[1] >= 0)
+	{
+		close(cur->h_pipe[1]);
+		cur->h_pipe[1] = -1;
+	}
+	
 	cur->in_fd = cur->h_pipe[0];
-	waitpid(pid, &exit_status, 0);
+	
+	if (waitpid(pid, &exit_status, 0) == -1)
+		g_status = SIGINT;
+		
 	signal_handler(MAIN);
+	
 	if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
 		g_status = SIGINT;
 	else if (WIFEXITED(exit_status) && WEXITSTATUS(exit_status) == 130)
 		g_status = SIGINT;
+
+	if (g_status == SIGINT || (WIFEXITED(exit_status) && WEXITSTATUS(exit_status) != 0))
+	{
+		if (cur->in_fd >= 0)
+		{
+			close(cur->in_fd);
+			cur->in_fd = -1;
+		}
+		cur->h_pipe[0] = -1;
+	}
 	return (exit_status);
 }
+
+// int	heredoc(t_cmd_group *cur)
+// {
+// 	int	pid;
+// 	int	exit_status = 0;
+
+// 	if (pipe(cur->h_pipe) == -1)
+// 		return (-1);
+// 	pid = fork();
+
+// //
+// 	if (pid == -1)
+// 	{
+// 		close(cur -> h_pipe[0]);
+// 		close(cur -> h_pipe[1]);
+// 		return (-1);
+// 	}
+// //
+// 	if (pid == 0)
+// 	{
+// 		close(cur->h_pipe[0]);
+// 		signal_handler(HEREDOC);
+// 		read_til_lim(cur);
+// 		close(cur->h_pipe[1]);
+
+// 		if (g_status == SIGINT)
+// 			exit_errno(130);
+
+// 		exit_errno(0);
+// 	}
+// //
+
+// 	signal_handler(MAIN_HEREDOC);
+// 	close_fd(cur->h_pipe[1]);
+	
+// //
+// 	cur->h_pipe[1] = -1;
+// //
+	
+// 	cur->in_fd = cur->h_pipe[0];
+// 	// waitpid(pid, &exit_status, 0);
+// //
+// 	if (waitpid(pid, &exit_status, 0) == -1)
+// 		g_status = SIGINT;
+// //	
+// 	signal_handler(MAIN);
+// 	if (WIFSIGNALED(exit_status) && WTERMSIG(exit_status) == SIGINT)
+// 		g_status = SIGINT;
+// 	else if (WIFEXITED(exit_status) && WEXITSTATUS(exit_status) == 130)
+// 		g_status = SIGINT;
+
+// //
+// 	if (g_status == SIGINT)
+// 	{
+// 		close_fd(cur->in_fd);
+// 		cur->in_fd = -1;
+// 		cur->h_pipe[0] = -1;
+// 	}
+// //
+// 	return (exit_status);
+// }
 
 void	loop_heredoc(t_cmd_group *cmd_lines)
 {
 	t_cmd_group	*cur;
 
 	cur = cmd_lines;
-	while (cur)
+	while (cur && g_status != SIGINT)
 	{
 		if (cur->is_heredoc == true)
 			heredoc(cur);
